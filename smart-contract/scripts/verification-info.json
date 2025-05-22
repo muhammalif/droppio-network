@@ -1,0 +1,17 @@
+{
+  "Droppio": {
+    "address": "0x28aA1A68fB9AaedF0f5C562Af9bF14Cc7D9f9BaC",
+    "constructorArguments": [
+      "0xD63029C1a3dA68b51c67c6D1DeC3DEe50D681661"
+    ],
+    "contractPath": "contracts/Droppio.sol"
+  },
+  "DroppioSBT": {
+    "address": "0x65E2A5d4fb0e404cAB58ABFDdd7Fd6F9f284da55",
+    "constructorArguments": [
+      "0x28aA1A68fB9AaedF0f5C562Af9bF14Cc7D9f9BaC",
+      "ipfs/bafybeifox46zxnxd5vp4jxxwkwblvulfxivr7wfo6t6et2fsils3tpwkhu/"
+    ],
+    "contractPath": "contracts/DroppioSBT.sol"
+  }
+}

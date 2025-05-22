@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String         @id @default(cuid())
+  address           String         @unique
+  name              String?
+  bio               String?
+  isCreator         Boolean        @default(false)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  balance           String?        // Cached balance from blockchain
+  totalTipped       String?        // Cached total tipped from blockchain
+  eligibilityLevel  String?        // bronze, silver, gold, none
+  badges            Badge[]
+  socialAccounts    SocialAccount[]
+  sentTips          Tip[]          @relation("SentTips")
+  receivedTips      Tip[]          @relation("ReceivedTips")
+  notifications     Notification[]
+}
+
+model Badge {
+  id        String   @id @default(cuid())
+  level     String   // bronze, silver, gold
+  mintedAt  DateTime @default(now())
+  txHash    String?  // Transaction hash from blockchain
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SocialAccount {
+  id        String   @id @default(cuid())
+  platform  String   // twitter, youtube, tiktok
+  username  String
+  verified  Boolean  @default(false)
+  verifiedAt DateTime?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, platform])
+}
+
+model Tip {
+  id          String   @id @default(cuid())
+  amount      String
+  message     String?
+  txHash      String?  // Transaction hash from blockchain
+  createdAt   DateTime @default(now())
+  senderId    String
+  sender      User     @relation("SentTips", fields: [senderId], references: [id])
+  receiverId  String
+  receiver    User     @relation("ReceivedTips", fields: [receiverId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  type      String   // tip, badge, creator, system
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  link      String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
