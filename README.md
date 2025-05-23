@@ -97,4 +97,4 @@ This project is under development for portfolio purposes. The frontend uses dumm
 
 ## Contact
 
-If you have any questions or would like to discuss this project further, please contact me at [Your Email Address or LinkedIn Profile]. 
+If you have any questions or would like to discuss this project further, please contact me at malif.1006@gmail.com. 
