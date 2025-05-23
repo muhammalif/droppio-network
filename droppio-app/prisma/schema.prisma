@@ -19,7 +19,7 @@ model User {
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
   balance           String?        // Cached balance from blockchain
-  totalTipped       String?        // Cached total tipped from blockchain
+  totalTipped       Decimal        @default(0.0) // Cached total tipped from blockchain
   eligibilityLevel  String?        // bronze, silver, gold, none
   badges            Badge[]
   socialAccounts    SocialAccount[]
@@ -51,7 +51,7 @@ model SocialAccount {
 
 model Tip {
   id          String   @id @default(cuid())
-  amount      String
+  amount      Decimal // Ubah tipe data menjadi Decimal untuk agregasi
   message     String?
   txHash      String?  // Transaction hash from blockchain
   createdAt   DateTime @default(now())

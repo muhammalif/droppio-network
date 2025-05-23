@@ -1,14 +1,20 @@
 import { NextResponse } from 'next/server';
-import { registerAsCreator } from '@/lib/contracts';
 
 export async function POST(req: Request) {
   try {
-    const tx = await registerAsCreator();
-    return NextResponse.json({ success: true, transactionHash: tx.hash });
+    // Simulate registration success
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
+
+    // Return a dummy success response
+    return NextResponse.json({ 
+      success: true, 
+      message: "Creator registered successfully (dummy)"
+    });
   } catch (error: any) {
+    console.error("Error simulating creator registration:", error);
     return NextResponse.json(
-      { success: false, error: error.message },
-      { status: 400 }
+      { success: false, error: "Failed to register as creator (dummy)" },
+      { status: 500 }
     );
   }
 } 
